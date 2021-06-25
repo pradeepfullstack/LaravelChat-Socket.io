@@ -28,16 +28,16 @@ class HomeController extends Controller
      */
     public function index(Request $request,$id=null)
     {
-        $massages = [];
+        $messages = [];
         $otherUser = null; 
         $user_id = Auth::id();
         if($id){
-            $otherUser = User::findOrFail($id);
+            $otherUser = User::findorfail($id);
             $group_id = (Auth::id()>$id)?Auth::id().$id:$id.Auth::id();
-            $massages = Chat::where('group_id',$group_id)->get()->toArray();
+            $messages = Chat::where('group_id',$group_id)->get()->toArray();
             Chat::where(['user_id'=>$id,'other_user_id'=>$user_id,'is_read'=>0])->update(['is_read'=>1]);
         }
-        $friends = User::where('id','!=', Auth::id())->select('*',DB::raw("(SELECT count(id) from chats where chats.other_user_id=$user_id and chats.user_id=users.id and  is_read=0) as unread_messages"))->get()->toArray();
-        return view('home',compact('friends','massages','otherUser','id'));
+        $friends = User::where('id','!=', Auth::id())->select('*',DB::raw("(SELECT COUNT(id) FROM chats WHERE chats.other_user_id=$user_id and chats.user_id=users.id and  is_read=0) as unread_messages"))->get()->toArray();
+        return view('home',compact('friends','messages','otherUser','id'));
     }
 }
