@@ -131,7 +131,16 @@ $(function() {
    })
 
    socket.on('user_connected', function(data) {
-      $("#status_" + data).html('<span class="fa fa-circle chat-online"></span> Online');
+      $("#status_" + data.id).html('<span class="fa fa-circle chat-online"></span> Online');
+      Push.create("Hello", {
+         body: `${data.name} is online.`,
+         icon: 'https://ui-avatars.com/api/?name={{Auth::user()->name}}',
+         timeout: 4000,
+         onClick: function () {
+            window.focus();
+            this.close();
+         }
+      });
    });
    socket.on('user_disconnected', function(data) {
       $("#status_" + data).html('<span class="fa fa-circle chat-offline"></span> Offline');
