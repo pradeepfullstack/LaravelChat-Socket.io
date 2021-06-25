@@ -1,4 +1,4 @@
-# Laravel Chat App using Node.Js(Socket.io,express&moment)
+# Laravel Chat App
 
 
 ## Installation
@@ -13,6 +13,11 @@ php artisan migrate
     npm install express mysql moment socket.io --save
  
 ```
+## Created Using
+Node.Js
+Socket.io
+Express
+Moment
 
 ## Usage
 
